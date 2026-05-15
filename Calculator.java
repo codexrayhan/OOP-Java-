@@ -5,9 +5,7 @@ import java.awt.event.*;
 import java.math.*;
 import java.util.*;
 
-/*
-  Calculator Engine and UI Logic
- */
+ // Calculator Engine and UI Logic
 class Calculator extends JFrame implements KeyListener {
 
     private BigDecimal num1 = BigDecimal.ZERO;
@@ -49,7 +47,6 @@ class Calculator extends JFrame implements KeyListener {
             {"1", "2", "3", "-"},
             {"(-)", "0", ".", "+"}
     };
-
     public Calculator() {
         super("Advanced Calculator");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -62,7 +59,6 @@ class Calculator extends JFrame implements KeyListener {
         setFocusable(true);
         setVisible(true);
     }
-
     private void buildUI() {
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(clrBg);
@@ -79,7 +75,6 @@ class Calculator extends JFrame implements KeyListener {
         add(mainPanel, BorderLayout.CENTER);
         add(buildHistoryPanel(), BorderLayout.EAST);
     }
-
     private JPanel buildTopBar() {
         JPanel bar = new JPanel(new BorderLayout());
         bar.setBackground(clrBg);
@@ -92,7 +87,6 @@ class Calculator extends JFrame implements KeyListener {
         bar.add(themeToggle, BorderLayout.EAST);
         return bar;
     }
-
     private JPanel buildDisplay() {
         displayPanel = new JPanel();
         displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.Y_AXIS));
@@ -116,7 +110,6 @@ class Calculator extends JFrame implements KeyListener {
         displayPanel.setPreferredSize(new Dimension(0, 130));
         return displayPanel;
     }
-
     private JPanel buildMemoryRow() {
         JPanel row = new JPanel(new GridLayout(1, 5, 4, 0));
         row.setBackground(clrPanel);
@@ -129,7 +122,6 @@ class Calculator extends JFrame implements KeyListener {
         }
         return row;
     }
-
     private JPanel buildButtonGrid() {
         JPanel grid = new JPanel(new GridLayout(GRID.length, 4, 5, 5));
         grid.setBackground(clrPanel);
@@ -144,7 +136,6 @@ class Calculator extends JFrame implements KeyListener {
         }
         return grid;
     }
-
     private JPanel buildEqualRow() {
         JPanel row = new JPanel(new BorderLayout());
         row.setBackground(clrPanel);
@@ -156,7 +147,6 @@ class Calculator extends JFrame implements KeyListener {
         row.add(eq, BorderLayout.CENTER);
         return row;
     }
-
     private JPanel buildHistoryPanel() {
         historyPanel = new JPanel(new BorderLayout());
         historyPanel.setBackground(new Color(15, 15, 15));
@@ -177,7 +167,6 @@ class Calculator extends JFrame implements KeyListener {
                 }
             }
         });
-
         historyScroll = new JScrollPane(historyList);
         historyScroll.getViewport().setBackground(new Color(15, 15, 15));
         JButton clearHist = plainBtn("Clear", new Color(50, 30, 30));
@@ -188,7 +177,6 @@ class Calculator extends JFrame implements KeyListener {
         historyPanel.add(clearHist, BorderLayout.SOUTH);
         return historyPanel;
     }
-
     private void handleInput(String input) {
         String cur = resultLabel.getText().replace(",", "");
         switch (input) {
@@ -235,7 +223,6 @@ class Calculator extends JFrame implements KeyListener {
             }
         }
     }
-
     private void pressOperator(char op, String cur) {
         if (!operatorPressed) {
             num1 = new BigDecimal(cur);
@@ -252,7 +239,6 @@ class Calculator extends JFrame implements KeyListener {
             }
         }
     }
-
     private void calculate(String curStr) {
         if (!operatorPressed) return;
         BigDecimal num2 = new BigDecimal(curStr);
@@ -275,7 +261,6 @@ class Calculator extends JFrame implements KeyListener {
         operatorPressed = false;
         freshResult = true;
     }
-
     private void handleMemory(String op) {
         String cur = resultLabel.getText().replace(",", "");
         BigDecimal val = new BigDecimal(cur);
@@ -287,7 +272,6 @@ class Calculator extends JFrame implements KeyListener {
             case "MC" -> memory = BigDecimal.ZERO;
         }
     }
-
     private void clearAll() {
         num1 = BigDecimal.ZERO;
         operator = ' ';
@@ -295,21 +279,17 @@ class Calculator extends JFrame implements KeyListener {
         freshResult = false;
         setDisplay("0", " ");
     }
-
     private void setDisplay(String res, String expr) {
         resultLabel.setText(res);
         expressionLabel.setText(expr.isEmpty() ? " " : expr);
     }
-
     private String format(BigDecimal v) {
         return v.stripTrailingZeros().toPlainString();
     }
-
     private void addHistory(String entry) {
         historyModel.add(0, entry);
         if (historyModel.size() > 20) historyModel.remove(historyModel.size() - 1);
     }
-
     private void toggleTheme() {
         darkMode = !darkMode;
         if (darkMode) {
@@ -331,7 +311,6 @@ class Calculator extends JFrame implements KeyListener {
             }
         }
     }
-
     private Color buttonColor(String lbl) {
         return switch (lbl) {
             case "CLR", "DEL" -> clrDangerBtn;
@@ -351,7 +330,6 @@ class Calculator extends JFrame implements KeyListener {
         b.setOpaque(true);
         return b;
     }
-
     private JButton plainBtn(String label, Color bg) {
         JButton b = new JButton(label);
         b.setBackground(bg);
@@ -361,7 +339,6 @@ class Calculator extends JFrame implements KeyListener {
         b.setBorderPainted(false);
         return b;
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
         char c = e.getKeyChar();
@@ -370,8 +347,6 @@ class Calculator extends JFrame implements KeyListener {
         else if (c == '\b') handleInput("DEL");
         else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) handleInput("CLR");
     }
-
     @Override public void keyTyped(KeyEvent e) {}
     @Override public void keyReleased(KeyEvent e) {}
 }
-
