@@ -5,8 +5,8 @@ import java.awt.event.*;
 import java.math.*;
 import java.util.*;
 
-/**
- * Calculator Engine and UI Logic
+/*
+  Calculator Engine and UI Logic
  */
 class Calculator extends JFrame implements KeyListener {
 
